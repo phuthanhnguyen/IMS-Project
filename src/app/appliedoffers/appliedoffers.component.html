@@ -1,0 +1,129 @@
+<div class="container"*ngIf="!showContent">
+  <div class="alert alert-success" role="alert">
+    <strong>To checkout an applied offer</strong>
+    <br>
+    <br>
+    Click on the button in the left down corner to appear the list of applied offer.
+    <br>
+    Choose an offer to see its statement.
+  </div>
+</div>
+
+<div class="container" *ngIf="showContent">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card card-block">
+        <div class="card-title text-xs-center">
+            <h3>{{offerCible.title}}</h3>
+        </div>
+        <hr>
+        <div class="card-text">
+          <md-list-item>
+            <span style="font-weight: bold;">Enterprise: </span>
+            <span>{{offerCible.enterprise}}</span>
+          </md-list-item>
+          <md-list-item>
+            <span style="font-weight: bold;">Upload Date: </span>
+            <span>{{offerCible.dateCreation}}</span>
+          </md-list-item>
+          <md-list-item>
+            <span style="font-weight: bold;">Beginning Date: </span>
+            <span>{{offerCible.dateBeginning}}</span>
+          </md-list-item>
+          <md-list-item>
+            <span style="font-weight: bold;">Intership Length: </span>
+            <span>{{offerCible.length}}</span>
+          </md-list-item>
+          <md-list-item>
+            <span style="font-weight: bold;">Activity Field: </span>
+            <span>{{offerCible.activityField}}</span>
+          </md-list-item>
+          <md-list-item>
+            <span style="font-weight: bold;">Location: </span>
+            <span>{{offerCible.areaCode}} {{offerCible.location}}</span>
+          </md-list-item>
+          <md-list-item>
+            <span style="font-weight: bold;">Mission: </span>
+            <span>{{offerCible.missionStatement}}</span>
+          </md-list-item>
+          <md-list-item>
+            <span style="font-weight: bold;">Details: </span>
+            <span>{{offerCible.details}}</span>
+          </md-list-item>
+          <md-list-item>
+            <span style="font-weight: bold;">Profile: </span>
+            <span>{{offerCible.profile}}</span>
+          </md-list-item>
+          <md-list-item>
+            <span style="font-weight: bold;">Pay: </span>
+            <span>{{offerCible.pay}}</span>
+          </md-list-item>
+          <md-list-item>
+            <span style="font-weight: bold;">Contact: </span>
+            <span>{{offerCible.contactInformations}}</span>
+          </md-list-item>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8" >
+      <div class="card card-block">
+        <div class="card-title text-xs-center" *ngIf="showContent">
+          <h3>Statement of your internship process at {{offerCible.enterprise}}</h3>
+        </div>
+
+        <div class="card-text">
+          <md-tab-group *ngIf="showContent">
+            <md-tab *ngIf="0<=appliStatement">
+              <template md-tab-label>
+                Step 1
+              </template>
+              <br>
+              <h1>Your internship application was sent to the partner!</h1>
+              <br>
+              <p>Waiting for the partner response to continue to the step 2</p>
+            </md-tab>
+            <md-tab *ngIf="1<=appliStatement">
+              <template md-tab-label>
+                Step 2
+              </template>
+              <br>
+              <h1>Your internship application was accepted by the partner!</h1>
+              <br>
+              <p>Waiting for the class coordinator response to continue to the step 3</p>
+            </md-tab>
+            <md-tab *ngIf="2<=appliStatement">
+              <template md-tab-label>
+                Step 3
+              </template>
+              <br>
+              <h1>Your internship application was accepted by the class coordinator!</h1>
+              <br>
+              <p>Waiting for the SFO response to continue to the step 4</p>
+            </md-tab>
+            <md-tab *ngIf="3<=appliStatement">
+              <template md-tab-label>
+                Step 4
+              </template>
+              <br>
+              <h1>Finally, your application is completely accepted!!</h1>
+              <br>
+              <p>Now you can go to the internship convention step</p>
+            </md-tab>
+          </md-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="dropup">
+  <button id="offerList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" md-fab color="primary">
+    <i class="material-icons">list</i>
+  </button>
+  <div class="dropdown-menu" aria-labelledby="offerList" id="dropuplist">
+    <a class="dropdown-item" *ngFor="let appliedOffer of appliedOfferList; let index = index" (click)="setOfferCible(index);">{{appliedOffer.title}}</a>
+  </div>
+</div>
+
+
+

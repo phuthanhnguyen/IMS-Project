@@ -1,0 +1,34 @@
+.center {
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}
+
+md-card {
+  margin: 20px;
+}
+
+#candidates {
+  position:relative;
+  height: 42vh;
+  overflow-y:scroll;
+}
+
+#studentprofile {
+  position:relative;
+  height: 41vh;
+  overflow-y:scroll;
+}
+
+#offerdetails {
+  position:relative;
+  height: 42vh;
+  overflow-y:scroll;
+}
+
+.content {
+  position:relative;
+  height: 70vh;
+  overflow-y:scroll;
+}

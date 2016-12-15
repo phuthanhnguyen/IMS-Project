@@ -1,0 +1,121 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4" >
+      <div class="card card-block">
+        <h4 class="card-title text-xs-center">List of applications</h4>
+        <div class="card-content">
+          <div *ngFor="let appli of waitingAppliList; let index = index;" class="list-group-item list-group-item-action {{isSelected(index)}}" (click)="setAppliCible(appli); setIndexSelected(index);">
+            <h5 class="list-group-item-heading">Application with ID {{appli.id}}</h5>
+            <p class="list-group-item-text">{{appli.statement}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div *ngIf="!showDetails">
+        <div class="alert alert-success" role="alert">
+          <strong>To checkout an application</strong>
+          <br>
+          Click on an application to show its details
+        </div>
+      </div>
+
+      <div *ngIf="showDetails">
+        <div role="tablist" aria-multiselectable="true">
+          <div class="card">
+            <div class="card-header" role="tab" id="headingOne">
+              <h5 class="mb-0">
+                Student Profile
+                <span data-toggle="collapse" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  <div class="float-xs-right">></div>
+                </span>
+              </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
+              <div class="card-block">
+                <table class="table text-xs-center">
+                  <tr>
+                    <td style="font-weight: bold;">Lastname:</td>
+                    <td>{{studentCible.lastName}}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold;">Firstname:</td>
+                    <td>{{studentCible.firstName}}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold;">Year:</td>
+                    <td>BAC +{{studentCible.year}}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold;">Status:</td>
+                    <td>{{studentCible.type}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" role="tab" id="headingTwo">
+              <h5 class="mb-0">
+                Offer Details
+                <span class="collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <div class="float-xs-right">></div>
+                </span>
+              </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+              <div class="card-block">
+                <md-list-item>
+                  <span style="font-weight: bold;">Enterprise: </span>
+                  <span>{{offerCible.enterprise}}</span>
+                </md-list-item>
+                <md-list-item>
+                  <span style="font-weight: bold;">Upload Date: </span>
+                  <span>{{offerCible.dateCreation}}</span>
+                </md-list-item>
+                <md-list-item>
+                  <span style="font-weight: bold;">Beginning Date: </span>
+                  <span>{{offerCible.dateBeginning}}</span>
+                </md-list-item>
+                <md-list-item>
+                  <span style="font-weight: bold;">Intership Length: </span>
+                  <span>{{offerCible.length}} month(s)</span>
+                </md-list-item>
+                <md-list-item>
+                  <span style="font-weight: bold;">Activity Field: </span>
+                  <span>{{offerCible.activityField}}</span>
+                </md-list-item>
+                <md-list-item>
+                  <span style="font-weight: bold;">Location:</span>
+                  <span>{{offerCible.areaCode}} {{offerCible.location}}</span>
+                </md-list-item>
+                <md-list-item>
+                  <span style="font-weight: bold;">Mission: </span>
+                  <span>{{offerCible.missionStatement}}</span>
+                </md-list-item>
+                <md-list-item>
+                  <span style="font-weight: bold;">Details: </span>
+                  <span>{{offerCible.details}}</span>
+                </md-list-item>
+                <md-list-item>
+                  <span style="font-weight: bold;">Profile: </span>
+                  <span>{{offerCible.profile}}</span>
+                </md-list-item>
+                <md-list-item>
+                  <span style="font-weight: bold;">Pay: </span>
+                  <span>{{offerCible.pay}}</span>
+                </md-list-item>
+                <md-list-item>
+                  <span style="font-weight: bold;">Contact: </span>
+                  <span>{{offerCible.contactInformations}}</span>
+                </md-list-item>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
