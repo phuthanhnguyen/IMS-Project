@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-7">
+      <md-card>
+        <md-card-title class="text-center">Create a new account</md-card-title>
+        <br>
+        <md-card-content>
+          <form role="form" (submit)="createAccount()">
+            <md-radio-group [(ngModel)]="type" [ngModelOptions]="{standalone: true}">
+              <md-radio-button value="INSA" (click)="setTemplate(1)">Class Coordinator</md-radio-button>
+              &nbsp;&nbsp;&nbsp;
+              <md-radio-button value="Student" (click)="setTemplate(0)">Student</md-radio-button>
+              &nbsp;&nbsp;&nbsp;
+              <md-radio-button value="Partner" (click)="setTemplate(2)">Partner</md-radio-button>
+            </md-radio-group>
+            <br>
+            <br>
+            <div *ngIf="isWhichUser==0">
+              <md-radio-group  [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
+                <md-radio-button value="1">BAC +1</md-radio-button>
+                &nbsp;&nbsp;&nbsp;
+                <md-radio-button value="2">BAC +2</md-radio-button>
+                &nbsp;&nbsp;&nbsp;
+                <md-radio-button value="3">BAC +3</md-radio-button>
+                &nbsp;&nbsp;&nbsp;
+                <md-radio-button value="4">BAC +4</md-radio-button>
+                &nbsp;&nbsp;&nbsp;
+                <md-radio-button value="5">BAC +5</md-radio-button>
+              </md-radio-group>
+              <br>
+              <br>
+            </div>
+            <md-input placeholder="Username" style="width: 100%" type="name" [(ngModel)]="username" [ngModelOptions]="{standalone: true}"></md-input>
+            <br>
+            <br>
+            <md-input placeholder="Mot de passe" style="width: 100%" type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}"></md-input>
+            <br>
+            <br>
+            <md-input placeholder="Last name" style="width: 100%" t [(ngModel)]="lastName" [ngModelOptions]="{standalone: true}"></md-input>
+            <br>
+            <br>
+            <md-input placeholder="First name" style="width: 100%" t [(ngModel)]="firstName" [ngModelOptions]="{standalone: true}"></md-input>
+            <br>
+            <br>
+            <div *ngIf="isWhichUser==2">
+              <md-input placeholder="Company" style="width: 100%" t [(ngModel)]="company" [ngModelOptions]="{standalone: true}"></md-input>
+              <br>
+              <br>
+            </div>
+            <button class="pull-right" md-raised-button color="primary" type="submit">Create</button>
+            <br>
+            <br>
+          </form>
+        </md-card-content>
+      </md-card>
+    </div>
+    <div class="col-md-5">
+      <md-card>
+        <md-card-title class="text-center">
+          <span>List of users</span>
+        </md-card-title>
+        <br>
+        <md-card-content>
+          <md-list>
+            <md-list-item *ngFor="let user of userList; let index = index"  (click)="selectItem(index)">
+              <h3 md-line [style.background-color]="isSelected(index)"> {{user.lastName}}  {{user.firstName}}</h3>
+              <p md-line style="opacity: 0.5;">{{user.type}} — BAC +{{user.year}} — {{user.username}}</p>
+            </md-list-item>
+          </md-list>
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
+</div>

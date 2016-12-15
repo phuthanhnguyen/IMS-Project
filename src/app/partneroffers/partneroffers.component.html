@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card card-block">
+        <h4 class="card-title text-xs-center">My offers</h4>
+        <hr>
+        <div class="card-content">
+          <div class="card-text content">
+            <div class="list-group">
+              <div class="list-group-item list-group-item-action {{isSelectedOffer(indexOffer)}}"
+                   data-toggle="popover" title="Candidates" data-popover-content="#candidateslist"
+                   *ngFor="let offer of myoffers; let indexOffer = index;" (click)="setOfferCible(offer,indexOffer); getCandidates()">
+                <h5 class="list-group-item-heading">{{offer.title}}</h5>
+                <p class="list-group-item-text">{{offer.enterprise}} — {{offer.length}} month(s) — {{offer.activityField}}</p>
+              </div>
+            </div>
+            <div id="candidateslist" >
+              <div class="list-group-item list-group-item-action {{isSelectedStudent(indexStudent)}}"
+                   *ngFor="let student of studentList; let indexStudent = index;" (click)="setCandidateCible(student,indexStudent); ">
+                <h5 class="list-group-item-heading">{{student.lastName}} {{student.firstName}}</h5>
+                <p class="list-group-item-text">BAC +{{student.year}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card card-block" id="offerdetails">
+            <h4 class="card-title text-xs-center">Offer details</h4>
+            <div class="card-content" *ngIf="showProfile">
+              <md-list-item *ngFor="let student of studentList; let indexStudent = index;" (click)="setCandidateCible(student,indexStudent)">
+                <h4 md-line [style.background-color]="isSelectedStudent(indexStudent)">{{student.lastName}} {{student.firstName}}</h4>
+                <p md-line style="opacity: 0.5;">BAC +{{student.year}}</p>
+              </md-list-item>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card card-block" id="candidates">
+            <h4 class="card-title text-xs-center">Candidates</h4>
+            <div class="card-content" *ngIf="showProfile">
+              <md-list-item *ngFor="let student of studentList; let indexStudent = index;" (click)="setCandidateCible(student,indexStudent)">
+                <h4 md-line [style.background-color]="isSelectedStudent(indexStudent)">{{student.lastName}} {{student.firstName}}</h4>
+                <p md-line style="opacity: 0.5;">BAC +{{student.year}}</p>
+              </md-list-item>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-block" id="studentprofile">
+            <h4 class="card-title text-xs-center">Student profile</h4>
+            <div class="card-content" *ngIf="showProfile">
+              <table class="table table-user-information text-xs-center">
+                <tr>
+                  <td style="font-weight: bold;">Lastname:</td>
+                  <td>{{studentCible.lastName}}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold;">Firstname:</td>
+                  <td>{{studentCible.firstName}}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold;">Year:</td>
+                  <td>BAC +{{studentCible.year}}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold;">Status:</td>
+                  <td>{{studentCible.type}}</td>
+                </tr>
+              </table>
+              <br>
+              <div class="text-center">
+                <button md-raised-button color="primary" (click)="candidateResponse('accept')">Accept</button>
+                <button md-raised-button color="accent" (click)="candidateResponse('refuse')">Refuse</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

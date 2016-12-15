@@ -1,0 +1,30 @@
+<div class="container">
+  <br>
+  <nav class="navbar navbar-light" style="background-color: #e3f2fd;font-size: medium;">
+    <a class="navbar-brand"><img src="../../images/logo.png" height="25" width="80"></a>
+    <ul class="nav navbar-nav">
+      <li class="nav-item {{getTab(1)}}"  (click)="setTab(1)">
+        <a class="nav-link" routerLink="profile">Profile</a>
+      </li>
+      <li class="nav-item {{getTab(2)}}" (click)="setTab(2)">
+        <a class="nav-link" routerLink="offers">Offers</a>
+      </li>
+      <li class="nav-item {{getTab(3)}}" (click)="setTab(3)">
+        <a class="nav-link" routerLink="appliedoffers">Applied Offers</a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav float-xs-right">
+      <li class="nav-item">
+        <a class="nav-link">Logout</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<br>
+<router-outlet></router-outlet>
+
+
+
+
+
+

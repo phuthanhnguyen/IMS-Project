@@ -1,0 +1,13 @@
+<md-sidenav-layout fullscreen>
+  <md-toolbar color="primary">
+    <button md-button>IMS Application</button>
+    <button md-button routerLink="alloffers">Offers</button>
+    <button md-button routerLink="waitingoffers">Waiting Candidates</button>
+    <button md-button routerLink="decidedcandidates">Decided Candidates</button>
+    <span class="app-toolbar-filler"></span>
+    <button md-button >Logout</button>
+  </md-toolbar>
+  <div class="app-content">
+    <router-outlet></router-outlet>
+  </div>
+</md-sidenav-layout>

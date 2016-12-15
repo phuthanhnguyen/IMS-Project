@@ -1,10 +1,105 @@
+<br>
 <div class="container">
-	<div class="form-group">
-		<label for="usr">Name:</label>
-		<input type="text" class="form-control" id="usr">
-	</div>
-	<div class="form-group">
-		<label for="pwd">Password:</label>
-		<input type="password" class="form-control" id="pwd">
-	</div>
+  <nav class="navbar navbar-light" style="background-color: #e3f2fd; font-size: medium;">
+    <a class="navbar-brand" href="#"><img src="../../images/logo.png" height="25" width="80"></a>
+    <ul class="nav navbar-nav float-xs-right">
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="modal" data-target="#loginModal">Login</a>
+      </li>
+    </ul>
+  </nav>
+  <br>
+  <div class="jumbotron">
+    <h1 class="display-3">Wellcome to IMS Project</h1>
+    <hr class="my-2">
+    <div class="lead">
+      <h4>Overview</h4>
+      <p>The aim of the project is to create an application which will automate the management of
+      internships for the students, starting from the candidacy up to the validation.</p>
+    </div>
+
+    <hr class="my-2">
+
+    <p class="lead">
+      <button class="btn btn-primary btn-lg" role="button" data-toggle="collapse" data-target="#learnmore" aria-expanded="false" aria-controls="learnmore">Learn more</button>
+    </p>
+
+
+    <div class="collapse" id="learnmore">
+        <h5>1 The roles</h5>
+
+        <p>We defined four primary roles which are the actors handled by the system.</p>
+
+        <h5>1.1 The student</h5>
+
+        <p>The student can search/apply to an offer, generate an internship agreement and validate a
+
+          completed internship.</p>
+
+        <h5>1.2 The class coordinator​ (CC)​ : this role represents a manager of a classroom</h5>
+
+        <p>A class coordinator can control the applications and the process of internship agreements
+
+          elaboration he handles.</p>
+
+        <h5>1.3 The partner ​: this role is linked to an enterprise, a laboratory or a school making
+
+          internships available.</h5>
+
+        <p>A partner can manage the application of a student to his offers and the internship
+
+          agreement.</p>
+
+        <h5>1.4 The security and defence officer (SDO)</h5>
+
+        <p>A SDO can control applications of students when they apply to offers in need of security
+
+          protocols.<br>
+
+          We defined two other roles for a well functioning system :
+        </p>
+
+        <h5>1.5 The administrator</h5>
+
+        <p> An administrator has full control over the application. He will be able to look at/edit/delete all
+
+          the offers, applications, internship agreements and archived internships.</p>
+
+        <h5>1.6 The anonymous person</h5>
+
+        <p>An anonymous person can not do anything on the system. An anonymous can only log in the system</p>
+      </div>
+    </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document" style="top: 100px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Login</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="name" class="form-control" id="username" placeholder="username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" placeholder="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary float-xs-right" (click)="signin()" data-dismiss="modal">Login</button>
+            <br>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
