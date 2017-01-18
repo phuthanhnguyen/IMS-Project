@@ -15,18 +15,6 @@ md-card {
   overflow-y:scroll;
 }
 
-#studentprofile {
-  position:relative;
-  height: 41vh;
-  overflow-y:scroll;
-}
-
-#offerdetails {
-  position:relative;
-  height: 42vh;
-  overflow-y:scroll;
-}
-
 .content {
   position:relative;
   height: 70vh;

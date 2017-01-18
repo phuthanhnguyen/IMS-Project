@@ -5,12 +5,12 @@
     <div class="card-text">
       <table class="table table-user-information text-xs-center">
         <tr>
-          <td style="font-weight: bold;">Lastname:</td>
-          <td>{{user.lastName}}</td>
+          <td style="font-weight: bold;">Name:</td>
+          <td>{{user.name}}</td>
         </tr>
         <tr>
-          <td style="font-weight: bold;">Firstname:</td>
-          <td>{{user.firstName}}</td>
+          <td style="font-weight: bold;">Faculty:</td>
+          <td>{{user.pathway}}</td>
         </tr>
         <tr>
           <td style="font-weight: bold;">Year:</td>
@@ -19,6 +19,26 @@
         <tr>
           <td style="font-weight: bold;">Status:</td>
           <td>{{user.type}}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold;">Email:</td>
+          <td>{{user.email}}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold;">CVs:</td>
+          <td>
+            <div *ngFor="let cv of cvs; let index=index">
+              <a target="_blank" href ="{{download(index)}}">{{cv.name}}</a>
+            </div>
+            <!--<input type="file" ng2FileSelect [uploader]="uploader"/>
+            <button class="btn btn-default" (click)="uploadFile()">Upload</button>-->
+            <form action="http://10.32.3.92:8080/IMS-war/resources/cvs?name=toto" method="POST" enctype="multipart/form-data">
+              <p>
+                File: <input type="file" name="file"/>
+              </p>
+              <input type="submit" value="Add User"/>
+            </form>
+          </td>
         </tr>
       </table>
     </div>

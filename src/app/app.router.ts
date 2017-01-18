@@ -12,6 +12,7 @@ import {PartneroffersComponent} from "./partneroffers/partneroffers.component";
 import {AcceptedcandidatesComponent} from "./acceptedcandidates/acceptedcandidates.component";
 import {InsaComponent} from "./insa/insa.component";
 import {WaitingofferComponent} from "./waitingoffer/waitingoffer.component";
+import {OfferdecideComponent} from "./offerdecide/offerdecide.component";
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -27,6 +28,7 @@ const routes: Routes = [
     children: [
       { path: '', component: PartneroffersComponent},
       { path: 'myoffers', component: PartneroffersComponent},
+      { path: 'myoffers/:offer', component: OfferdecideComponent},
       { path: 'acceptedcandidates', component: AcceptedcandidatesComponent},
     ]
   },

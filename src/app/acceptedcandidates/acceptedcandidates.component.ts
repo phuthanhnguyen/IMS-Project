@@ -30,7 +30,6 @@ export class AcceptedcandidatesComponent implements OnInit {
   urlUpdateAppli:string;
 
   constructor(private http: Http, private sharedService: SharedService) {
-    this.user = this.sharedService.getUser();
     //this.getDecidedAppli();
     //test with local application
     var appl = new Appli(1,1,1,1,"WAITING_CLASS_COORDINATOR");
@@ -43,7 +42,7 @@ export class AcceptedcandidatesComponent implements OnInit {
     /*this.updateStudentCible(this.urlGetStudentByID, this.appliCible);
     this.updateOfferCible(this.urlGetOfferByID, this.appliCible);*/
     //test local
-    var student = new Student(1,"NGUYEN","Phu Thanh","Student","ptnguyen",null,5,[]);
+    var student = new Student(1,"NGUYEN Phu Thanh","Student","ptnguyen",null,5,[],null,null);
     var offer = new Offer(2,"CGI", "12/3/2016", "1/2/2017", 6, "Computer Science", "Web development", 31400, "Toulouse - France", "Do something interesting", 1000, "Some details", "Javascript,html,css,PHP", "tests@test.com");
     this.offerCible = offer;
     this.studentCible = student;
@@ -78,7 +77,7 @@ export class AcceptedcandidatesComponent implements OnInit {
   //make a review of this appli (show student profile, offer details)
   //for each appli get the student profile and the details of offer
   //get student cible (appli object => studentId => student object)
-  updateStudentCible = function(urlGetStudentByID:string,appliCible: Appli) {
+  updateStudentCible = function(urlGetStudentByID:string, appliCible: Appli) {
     var json = JSON.stringify({'studentId': appliCible.studentId});
     var headers = new Headers();
     headers.append('Content-type', 'application/json');
@@ -112,6 +111,9 @@ export class AcceptedcandidatesComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.sharedService.getUser() != null)
+      this.user = this.sharedService.getUser();
+    else location.href = "http://localhost:4200/";
   }
 
 }

@@ -44,15 +44,15 @@
           </md-list-item>
           <md-list-item>
             <span style="font-weight: bold;">Mission: </span>
-            <span>{{offerCible.missionStatement}}</span>
+            <span [innerHTML]="offerCible.missionStatement"></span>
           </md-list-item>
           <md-list-item>
             <span style="font-weight: bold;">Details: </span>
-            <span>{{offerCible.details}}</span>
+            <span [innerHTML]="offerCible.details"></span>
           </md-list-item>
           <md-list-item>
             <span style="font-weight: bold;">Profile: </span>
-            <span>{{offerCible.profile}}</span>
+            <span [innerHTML]="offerCible.profile"></span>
           </md-list-item>
           <md-list-item>
             <span style="font-weight: bold;">Pay: </span>
@@ -60,7 +60,7 @@
           </md-list-item>
           <md-list-item>
             <span style="font-weight: bold;">Contact: </span>
-            <span>{{offerCible.contactInformations}}</span>
+            <span [innerHTML]="offerCible.contactInformations"></span>
           </md-list-item>
         </div>
       </div>

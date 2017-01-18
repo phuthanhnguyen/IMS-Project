@@ -1,0 +1,116 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card card-block">
+        <h4 class="card-title text-xs-center">Candidates</h4>
+        <div class="card-content" id="candidates">
+          <div class="list-group">
+            <div *ngFor="let student of studentList; let indexStudent = index;"
+                 class="list-group-item list-group-item-action {{isSelectedStudent(indexStudent)}}"
+                 (click)="setCandidateCible(student,indexStudent)">
+              <h5 class="list-group-item-heading">{{student.lastName}} {{student.firstName}}</h5>
+              <p class="list-group-item-text">BAC +{{student.year}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="card card-block" id="offerdetails">
+        <h4 class="card-title text-xs-center">Offer details</h4>
+        <div class="card-content" *ngIf="showProfile">
+          <p>
+            <span style="font-weight: bold;">Enterprise: </span>
+            <span>{{offerCible.enterprise}}</span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Upload Date: </span>
+            <span>{{offerCible.dateCreation}}</span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Beginning Date: </span>
+            <span>{{offerCible.dateBeginning}}</span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Intership Length: </span>
+            <span>{{offerCible.length}} month(s)</span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Activity Field: </span>
+            <span>{{offerCible.activityField}}</span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Location:</span>
+            <span>{{offerCible.areaCode}} {{offerCible.location}}</span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Mission: </span>
+            <br>
+            <br>
+            <span [innerHTML]="offerCible.missionStatement"></span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Details: </span>
+            <span>{{offerCible.details}}</span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Profile: </span>
+            <span>{{offerCible.profile}}</span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Pay: </span>
+            <span>{{offerCible.pay}}</span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Contact: </span>
+            <span>{{offerCible.contactInformations}}</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="card card-block" id="studentprofile">
+        <h4 class="card-title text-xs-center">Student profile</h4>
+        <div class="card-content" *ngIf="showProfile">
+          <table class="table table-user-information text-xs-center">
+            <tr>
+              <td style="font-weight: bold;">Name:</td>
+              <td>{{user.name}}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">Faculty:</td>
+              <td>{{user.pathway}}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">Year:</td>
+              <td>BAC +{{user.year}}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">Status:</td>
+              <td>{{user.type}}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">Email:</td>
+              <td>{{user.email}}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">Cv:</td>
+              <td>
+                <div *ngFor="let cv of user.cvs">
+                  <span>{{cs.name}}</span>
+
+                </div>
+              </td>
+            </tr>
+          </table>
+          <br>
+          <div class="text-xs-center">
+            <button class="btn btn-primary" (click)="candidateResponse('accept')">Accept</button>
+            <button class="btn btn-danger" (click)="candidateResponse('refuse')">Refuse</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

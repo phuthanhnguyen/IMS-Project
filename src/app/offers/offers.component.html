@@ -2,13 +2,23 @@
   <div class="row">
     <div class="col-md-6">
         <div class="card card-block">
-          <h3 class="card-title text-xs-center">List of offers</h3>
+          <span>
+            <h3 class="card-title">
+              List of offers
+            </h3>
+            <select [(ngModel)]="order" [ngModelOptions]="{standalone: true}">
+                <option selected>Order</option>
+                <option value="1">Begin date</option>
+                <option value="2">Creation date</option>
+                <option value="3">Pay</option>
+            </select>
+          </span>
           <hr>
           <div class="card-text content">
             <div class="list-group">
               <div *ngFor="let offer of offers; let index = index;" class="list-group-item list-group-item-action {{isSelected(index)}}" (click)="updateOfferCible(offer); selectItem(index);">
                 <h5 class="list-group-item-heading">{{offer.title}}</h5>
-                <p class="list-group-item-text">{{offer.enterprise}} — {{offer.length}} month(s) — {{offer.activityField}}</p>
+                <p class="list-group-item-text">{{offer.enterprise}} — {{offer.length}} day(s) — {{offer.activityField}}</p>
               </div>
             </div>
           </div>
@@ -42,7 +52,7 @@
           </p>
           <p>
             <span style="font-weight: bold;">Intership Length: </span>
-            <span>{{offerCible.length}} month(s)</span>
+            <span>{{offerCible.length}} day(s)</span>
           </p>
           <p>
             <span style="font-weight: bold;">Activity Field: </span>
@@ -64,18 +74,18 @@
           </p>
           <p>
             <span style="font-weight: bold;">Profile: </span>
-            <span>{{offerCible.profile}}</span>
+            <span [innerHTML]="offerCible.profile"></span>
           </p>
           <p>
             <span style="font-weight: bold;">Pay: </span>
-            <span>{{offerCible.pay}}</span>
+            <span>{{offerCible.pay}} euro(s)</span>
           </p>
           <p>
             <span style="font-weight: bold;">Contact: </span>
-            <span>{{offerCible.contactInformations}}</span>
+            <span [innerHTML]="offerCible.contactInformations"></span>
           </p>
           <br>
-          <button type="button submit" class="btn btn-primary float-xs-right float-xs-right">Apply</button>
+          <button class="btn btn-primary float-xs-right float-xs-right" data-toggle="modal" data-target="#applyModal">Apply</button>
         </div>
       </div>
     </div>
@@ -83,9 +93,12 @@
 </div>
 
 <div class="dropup">
-  <button id="filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="position: fixed; bottom: 30px; left: 30px;" md-fab color="primary"><i class="material-icons">filter_list</i></button>
+  <button id="filter" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false" style="position: fixed; bottom: 30px; left: 30px;" md-fab color="primary">
+    <i class="material-icons">filter_list</i>
+  </button>
   <div class="dropdown-menu" aria-labelledby="filter" style="position: fixed; bottom: 100px; left:30px; width: 300px;">
-    <div style="margin: 20px;">
+    <div style="margin-left: 20px; margin-right: 20px; margin-top: 10px; margin-down: 10px;">
       <form role="form" (submit)="filter()">
         <div class="form-group">
           <label for="date">Date of internship:</label>
@@ -97,14 +110,69 @@
         </div>
         <div class="form-group">
           <label for="length">Length of internship:</label>
-          <input type="text" class="form-control" placeholder="Company's name" id="length" [(ngModel)]="internshipLength" [ngModelOptions]="{standalone: true}">
+          <input type="text" class="form-control" placeholder="Length of internship" id="length" [(ngModel)]="internshipLength" [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="form-group">
+          <label for="actField">Activity Field:</label>
+          <input type="text" class="form-control" placeholder="Activity Field" id="actField" [(ngModel)]="activityField" [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="form-group">
+          <label for="areacode">Area code:</label>
+          <input type="text" class="form-control" placeholder="Area code" id="areacode" [(ngModel)]="areaCode" [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="form-group">
+          <label for="pay">Pay:</label>
+          <input type="text" class="form-control" placeholder="pay" id="pay" [(ngModel)]="pay" [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="form-group">
+          <label for="keywords">Keywords:</label>
+          <input type="text" class="form-control" placeholder="Keywords" id="keywords" [(ngModel)]="keywords" [ngModelOptions]="{standalone: true}">
         </div>
         <div class="form-group">
           <button type="button submit" class="btn btn-primary float-xs-right">Filter</button>
         </div>
-        <br>
       </form>
     </div>
   </div>
 </div>
 
+<!-- Apply Modal -->
+<div class="modal fade" id="applyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document" style="top: 100px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Apply to offer</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea class="form-control" id="message" rows="4"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Choose a CV:</label>
+            <div *ngFor="let cv of cvs">
+              <label class="custom-control custom-radio">
+                <input id="radio1" name="radio" type="radio" class="custom-control-input" value="{{cv.id}}" [(ngModel)]="choosedCV" [ngModelOptions]="{standalone: true}">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">{{cv.name}}</span>
+                <br>
+              </label>
+              <br>
+            </div>
+          </div>
+
+          <br>
+          <div class="form-group">
+            <button class="btn btn-primary float-xs-right" (click)="apply()" data-dismiss="modal">Apply</button>
+            <br>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

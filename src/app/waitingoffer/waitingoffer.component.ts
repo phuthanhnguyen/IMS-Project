@@ -29,7 +29,6 @@ export class WaitingofferComponent implements OnInit {
   urlUpdateAppli:string;
 
   constructor(private http: Http, private sharedService: SharedService) {
-    this.user = this.sharedService.getUser();
     //this.getWaitingAppli();
   }
 
@@ -130,6 +129,9 @@ export class WaitingofferComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.sharedService.getUser() != null)
+      this.user = this.sharedService.getUser();
+    else location.href = "http://localhost:4200/";
   }
 
 }

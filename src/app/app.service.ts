@@ -4,9 +4,9 @@ import {Offer} from './model/offer';
 
 @Injectable()
 export class SharedService {
-  private offers: Offer[] = [];
   private user: User = null;
-
+  private autho: string = null;
+  private offerCible: Offer =null;
   constructor() {}
 
   setUser(user: User){
@@ -17,11 +17,19 @@ export class SharedService {
     return this.user;
   }
 
-  setOffers(offers: Offer[]){
-    this.offers = offers;
+  setAutho(autho: string){
+    this.autho = autho;
   }
 
-  getOffers(){
-    return this.offers;
+  getAutho(){
+    return this.autho;
+  }
+
+  setOfferCible(offer: Offer){
+    this.offerCible = offer;
+  }
+
+  getOfferCible(){
+    return this.offerCible;
   }
 }

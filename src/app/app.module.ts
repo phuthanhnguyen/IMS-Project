@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
 import { RoutingModule } from './app.router';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { FileSelectDirective, FileUploader } from 'ng2-file-upload';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -19,6 +19,8 @@ import { PartneroffersComponent } from './partneroffers/partneroffers.component'
 import { InsaComponent } from './insa/insa.component';
 import { WaitingofferComponent } from './waitingoffer/waitingoffer.component';
 import { AcceptedcandidatesComponent } from './acceptedcandidates/acceptedcandidates.component';
+import { OfferdecideComponent } from './offerdecide/offerdecide.component';
+
 
 @NgModule({
   declarations: [
@@ -34,17 +36,20 @@ import { AcceptedcandidatesComponent } from './acceptedcandidates/acceptedcandid
     PartneroffersComponent,
     InsaComponent,
     WaitingofferComponent,
-    AcceptedcandidatesComponent
+    AcceptedcandidatesComponent,
+    OfferdecideComponent,
+    FileSelectDirective
   ],
+
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
     MaterialModule.forRoot(),
-    RoutingModule,
-    NgbModule.forRoot()
+    RoutingModule
   ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

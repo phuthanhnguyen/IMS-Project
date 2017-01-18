@@ -25,7 +25,16 @@ export class StudentinterfaceComponent implements OnInit {
       return "active";
     } else return "";
   }
+
+  logout = function(){
+    this.sharedService.setAutho(null);
+    this.sharedService.setUser(null);
+    location.href = "http://localhost:4200/";
+  }
+
   ngOnInit() {
-    this.user = this.sharedService.getUser();
+    if (this.sharedService.getUser() != null)
+      this.user = this.sharedService.getUser();
+    else location.href = "http://localhost:4200/";
   }
 }

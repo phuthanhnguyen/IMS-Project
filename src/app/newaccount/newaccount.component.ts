@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {User, Insa, Student, Partner} from '../model/user';
 import {Http, Headers} from '@angular/http';
 import {Offer} from "../model/offer";
+import {SharedService} from "../app.service";
 @Component({
   selector: 'app-newaccount',
   templateUrl: './newaccount.component.html',
@@ -9,8 +10,7 @@ import {Offer} from "../model/offer";
 })
 export class NewaccountComponent implements OnInit {
   newUser: User;
-  lastName:string = null;
-  firstName:string = null;
+  name:string = null;
   username:string = null;
   password:string = null;
   type:string = null;
@@ -23,7 +23,7 @@ export class NewaccountComponent implements OnInit {
   validateForm: boolean;
   indexSelected:number;
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private sharedService: SharedService) {
     this.getUserList();
   }
 
@@ -34,21 +34,21 @@ export class NewaccountComponent implements OnInit {
   createAccount = function(){
     switch (this.type){
       case "Student":
-        this.validateForm = this.lastName && this.firstName && this.type && this.username && this.year && this.password;
+        this.validateForm = this.name && this.type && this.username && this.year && this.password;
         if (this.validateForm)
-          this.newUser = new Student(null,this.lastName,this.firstName,this.type,this.username,this.password,this.year,[]);
+          this.newUser = new Student(null,this.name,this.type,this.username,this.password,this.year,[],null,null);
         else return alert("Please insert every informations");
         break;
       case "INSA":
-        this.validateForm = this.lastName && this.firstName && this.type && this.username,this.password;
+        this.validateForm = this.name && this.type && this.username,this.password;
         if (this.validateForm)
-          this.newUser = new Insa(null,this.lastName,this.firstName,this.type,this.username,this.password);
+          this.newUser = new Insa(null,this.name,this.type,this.username,this.password,null);
         else return alert("Please insert every informations");
         break;
       case "Partner":
-        this.validateForm = this.lastName && this.firstName && this.type && this.username && this.password;
+        this.validateForm = this.name && this.type && this.username && this.password;
         if (this.validateForm)
-          this.newUser = new Partner(null,this.lastName,this.firstName,this.type,this.username,this.password,this.company);
+          this.newUser = new Partner(null,this.name,this.type,this.username,this.password,this.company,null);
         else return alert("Please insert every informations");
         break;
       default:
@@ -113,6 +113,8 @@ export class NewaccountComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.sharedService.getUser() == null)
+      location.href = "http://localhost:4200/";
   }
 
 }

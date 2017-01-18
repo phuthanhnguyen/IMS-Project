@@ -13,7 +13,6 @@ import {Appli} from "../model/appli";
 })
 export class AppliedoffersComponent implements OnInit {
   user: Student;
-  appliedOffersId:number[];
   offerCible: Offer = null;
   applicationCible: Appli = null;
   //display purpose
@@ -21,28 +20,16 @@ export class AppliedoffersComponent implements OnInit {
   showContent: boolean = false;
   //model list to show on template
   appliedOfferList: Offer[] = [];
-  applicationList: Appli[] = []
+  applicationList: Appli[] = [];
   //define the url of the service
-  urlOfferService:string=null;
-  urlAppliService:string =null;
+  urlOfferService:string='http://localhost:3000/appliedoffers';
+  urlAppliService:string ='http://localhost:3000/appliedoffers';
+
   constructor(private http: Http, private sharedService: SharedService) {
-    //get user
-    //this.user =  this.sharedService.getUser();
+    this.user = this.sharedService.getUser();
     console.log(this.user);
-    //get id of applied offer
-    //this.appliedOffersId = this.user.offerApplied;
-    //console.log(this.appliedOffersId);
-    //get list applied offer from server
-    //this.getListOffer(this.appliedOffersId);
-    //get application list
-    //test with a local appli list
-    this.applicationList.push(new Appli(2,8,1,4,"WAITING_CLASS_COORDINATOR"));
-    this.applicationList.push(new Appli(2,4,1,4,"WAITING_PARTNER"));
-    this.applicationList.push(new Appli(2,1,1,4,"WAITING_SFO"));
-    //test with a created list applied offer
-    this.appliedOfferList.push(new Offer(1,"Cap Gemini", "12/3/2016", "1/2/2017", 6, "Computer Science", "Web development", 31400, "Toulouse - France", "Do something interesting", 1000, "Some details", "Javascript,html,css,PHP", "tests@test.com"));
-    this.appliedOfferList.push(new Offer(4,"Linagora", "12/3/2016", "1/2/2017", 6, "Computer Science", "Java development", 31400, "Toulouse - France", "Do something interesting", 1000, "Some details", "Javascript,html,css,PHP", "tests@test.com"));
-    this.appliedOfferList.push(new Offer(8,"Microsoft", "12/3/2016", "1/2/2017", 6, "Computer Science", "C++ development", 31400, "Toulouse - France", "Do something interesting", 1000, "Some details", "Javascript,html,css,PHP", "tests@test.com"));
+
+    this.getApplications();
   }
 
   setStatement(statement:string){
@@ -62,33 +49,33 @@ export class AppliedoffersComponent implements OnInit {
     this.showContent = true;
   }
 
-  //get list applied offer from server
-  getListOffer = function(appliedOffersId: Offer[]){
-    var json = JSON.stringify(appliedOffersId);
-    var headers = new Headers();
-    headers.append('Content-type','application/json');
-    this.http.post(this.urlOfferService,json,{headers: headers})
-      .map(res => res.json())
-      .subscribe(
-        data => {
-          this.appliedOfferList = JSON.parse(data);
-        },
-        error => {
-          console.log(error);
-        }
-      );
-  }
-
-  //get list application
+  //get list application and list offer
   getApplications = function(){
-    var json = JSON.stringify(this.user.id);
+    var json = JSON.stringify(
+      {
+        "studentId": this.user.id,
+        "auth": this.sharedService.getAutho()
+      }
+    );
     var headers = new Headers();
     headers.append('Content-type','application/json');
     this.http.post(this.urlAppliService,json,{headers: headers})
       .map(res => res.json())
       .subscribe(
         data => {
-          this.applicationList = JSON.parse(data);
+          var apps = JSON.parse(data.applications);
+          for (var i=0; i<apps.length; i++){
+            this.applicationList.push(new Appli(apps[i].id,apps[i].idOffer,apps[i].idStudent,apps[i].idPartner,apps[i].state))
+          }
+          console.log(this.applicationList);
+
+          var offers = JSON.parse(data.offers);
+          for (var i=0; i<offers.length; i++){
+            this.appliedOfferList.push(new Offer(offers[i].ido,offers[i].enterprise,offers[i].dateCreation,offers[i].dateBeginning,offers[i].length,
+              offers[i].activityField, offers[i].title, offers[i].areaCode,offers[i].location,offers[i].missionStatement,
+              offers[i].pay,offers[i].details,offers[i].profile,offers[i].contactInformations));
+          }
+          console.log(this.appliedOfferList)
         },
         error => {
           console.log(error);
@@ -107,6 +94,9 @@ export class AppliedoffersComponent implements OnInit {
 
 
   ngOnInit() {
+    if (this.sharedService.getUser() != null)
+      this.user = this.sharedService.getUser();
+    else location.href = "http://localhost:4200/";
   }
 
 }
