@@ -33,14 +33,15 @@ export class AppliedoffersComponent implements OnInit {
   }
 
   setStatement(statement:string){
-    if (statement=="WAITING_CLASS_COORDINATOR")
+    if (statement=="WAITING_CC")
         this.appliStatement=1;
     if (statement=="WAITING_PARTNER")
         this.appliStatement=0;
-    if (statement=="WAITING_SFO")
+    if (statement=="WAITING_FSD")
         this.appliStatement=2;
     console.log(this.appliStatement);
   }
+
   setOfferCible(index){
     this.offerCible = this.appliedOfferList[index];
     this.updateAppliCible(this.offerCible.id);
@@ -53,7 +54,6 @@ export class AppliedoffersComponent implements OnInit {
   getApplications = function(){
     var json = JSON.stringify(
       {
-        "studentId": this.user.id,
         "auth": this.sharedService.getAutho()
       }
     );

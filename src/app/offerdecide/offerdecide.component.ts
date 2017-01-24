@@ -4,6 +4,7 @@ import {Student, User, Partner} from "../model/user";
 import {Headers, Http} from "@angular/http";
 import {SharedService} from "../app.service";
 import {Offer} from "../model/offer";
+import {hasIndexFile} from "angular-cli/utilities/get-dependent-files";
 
 @Component({
   selector: 'app-offerdecide',
@@ -13,6 +14,8 @@ import {Offer} from "../model/offer";
 export class OfferdecideComponent implements OnInit {
   candidates: Appli[] = [];
   studentList: Student[] = [];
+  applicationList: Appli[] = [];
+
   offerCible: Offer;
   //chosen object
   studentCible: Student = null;
@@ -22,61 +25,70 @@ export class OfferdecideComponent implements OnInit {
 
   //variable for display things
   showDetails:boolean = false;
-  indexStudentCible:number = null;
+  indexStudentCible:number = 0;
   showProfile:boolean = false;
 
   //for http request
-  urlOMS: string;
-  urlAMS: string;
+  urlAMS: string = "http://localhost:3000/getcandidates";
+  urlAMSDecide: string = "http://localhost:3000/setdecision";
 
   constructor(private http: Http, private sharedService: SharedService) {
-    this.studentList.push(new Student(1,"NGUYEN Phu Thanh","Student","ptnguyen",null,5,[],null,null));
-    this.studentList.push(new Student(2,"fdfdsf Phu Thanh","Student","ptnguyen",null,5,[],null,null));
-    this.studentList.push(new Student(3,"fdfsd Phu Thanh","Student","ptnguyen",null,5,[],null,null));
+    this.partner = this.sharedService.getUser();
+    this.offerCible = this.sharedService.getOfferCible();
+    this.getApplications();
+    this.getCandidates();
+  }
+
+  //get applications
+  getApplications = function(){
+    var offerID = this.offerCible.id;
+    //sent offerID to AMS to get application list
+    var json = JSON.stringify({'offerId': offerID});
+    console.log(json);
+    var headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    this.http.post("http://localhost:3000/getapplications", json, {headers: headers})
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          console.log(data);
+          var applications = data;
+          for (var i=0; i<applications.length; i++){
+            this.applicationList.push(applications[i]);
+          }
+          console.log(this.applicationList);
+        },
+        error => console.log(error)
+      )
   }
 
   //get candidate: offer object -> offer ID -> application list
   getCandidates = function() {
-    /*var offerID = this.offerCible.id;
+     var offerID = this.offerCible.id;
      //sent offerID to AMS to get application list
-     var json = JSON.stringify({'offerID': offerID});
+     var json = JSON.stringify({'offerId': offerID});
      console.log(json);
      var headers = new Headers();
      headers.append('Content-type', 'application/json');
      this.http.post(this.urlAMS, json, {headers: headers})
      .map(res => res.json())
      .subscribe(
-     data => {
-     console.log(data);
-     this.candidates = JSON.parse(data);
-     this.getStudentList();
-     console.log(this.candidates);
-     },
-     error => console.log(error)
-     )*/
+       data => {
+         console.log(data);
+         var students = data;
+         for (var i=0; i<students.length; i++){
+           this.studentList.push(new Student(students[i].id,students[i].name,students[i].group,students[i].username,null,students[i].year,students[i].cvs,students[i].email,students[i].pathway));
+         }
+         console.log(this.studentList);
+       },
+       error => console.log(error)
+     )
   }
 
-  //get student list: application list -> list student
-  getStudentList = function() {
-    //application list -> list student
-    var json = JSON.stringify(this.candidates);
-    console.log(json);
-    var headers = new Headers();
-    headers.append('Content-type', 'application/json');
-    this.http.post(this.urlAMS, json, {headers: headers})
-      .map(res => res.json())
-      .subscribe(
-        data => {
-          console.log(data);
-          this.studentList = JSON.parse(data);
-          console.log(this.studentList);
-        },
-        error => console.log(error)
-      )
-  }
-
-  setCandidateCible(student: Student, index:number) {
+  //getApplications
+  setCandidateCible(student:Student, index:number) {
     this.studentCible = student;
+    console.log(student);
     this.indexStudentCible = index;
     this.showProfile = true;
   }
@@ -88,18 +100,20 @@ export class OfferdecideComponent implements OnInit {
   }
 
   //decide a response to candidate
-  candidateResponse = function(decison:string) {
+  candidateResponse = function(decision:string) {
+    //get application
+    var applicationId = this.getApplicationId(this.studentCible.id);
+    console.log(applicationId);
     //change statement of application: send [studentId and offer Id]
     var requestContent = {
-      'studentId': this.studentCible,
-      'offerId': this.offerCible,
-      'decision': decison,
-      'partnerId': this.sharedService.getUser().id
+      'auth': this.sharedService.getAutho(),
+      'applicationId': applicationId,
+      'decision': decision
     }
     var json = JSON.stringify(requestContent);
     var headers = new Headers();
     headers.append('Content-type', 'application/json');
-    this.http.post(this.urlAMS, json, {headers: headers})
+    this.http.post(this.urlAMSDecide, json, {headers: headers})
       .map(res=>res.json())
       .subscribe(
         data=> {
@@ -107,6 +121,17 @@ export class OfferdecideComponent implements OnInit {
         },
         error=>console.log(error)
       )
+  }
+
+  getApplicationId = function(studentId: string){
+    console.log(this.applicationList);
+    for (var i=0; i<this.applicationList.length; i++){
+      console.log(this.applicationList[i].idStudent);
+      console.log(studentId);
+      if(this.applicationList[i].idStudent == studentId){
+        return this.applicationList[i].id;
+      }
+    }
   }
 
   ngOnInit() {

@@ -26,27 +26,12 @@ export class PartneroffersComponent implements OnInit {
   offerTest:Offer;
   constructor(private http: Http, private sharedService: SharedService, private router: Router) {
     this.partner = this.sharedService.getUser();
-    //test local
-    /*this.offerTest = (new Offer(10,"Samsung", "12/3/2016", "1/2/2017", 6, "Computer Science", "Web development", 31400, "Toulouse - France", "Do something interesting", 1000, "Some details", "Javascript,html,css,PHP", "tests@test.com"));
-    this.myoffers.push(this.offerTest);
-    this.offerTest = (new Offer(11,"Dell", "12/3/2016", "1/2/2017", 6, "Computer Science", "Web development", 31400, "Toulouse - France", "Do something interesting", 1000, "Some details", "Javascript,html,css,PHP", "tests@test.com"));
-    this.myoffers.push(this.offerTest);
-    this.offerTest = (new Offer(12,"HP", "12/3/2016", "1/2/2017", 6, "Computer Science", "Web development", 31400, "Toulouse - France", "Do something interesting", 1000, "Some details", "Javascript,html,css,PHP", "tests@test.com"));
-    this.myoffers.push(this.offerTest);
-    this.offerTest = (new Offer(13,"Htc", "12/3/2016", "1/2/2017", 6, "Computer Science", "Web development", 31400, "Toulouse - France", "Do something interesting", 1000, "Some details", "Javascript,html,css,PHP", "tests@test.com"));
-    this.myoffers.push(this.offerTest);
-    this.offerTest = (new Offer(14,"Sony", "12/3/2016", "1/2/2017", 6, "Computer Science", "Web development", 31400, "Toulouse - France", "Do something interesting", 1000, "Some details", "Javascript,html,css,PHP", "tests@test.com"));
-    this.myoffers.push(this.offerTest);
-    this.offerTest = (new Offer(15,"LOL", "12/3/2016", "1/2/2017", 6, "Computer Science", "Web development", 31400, "Toulouse - France", "Do something interesting", 1000, "Some details", "Javascript,html,css,PHP", "tests@test.com"));
-    this.myoffers.push(this.offerTest);*/
-
     this.getMyOffers();
   }
 
   //get my offer: partner object -> company name -> offers list
   getMyOffers = function(){
     var company = this.partner.company;
-    console.log(company);
     var json = JSON.stringify({
       'company': company,
       'auth': this.sharedService.getAutho()

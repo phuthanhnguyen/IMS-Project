@@ -13,6 +13,7 @@ import {AcceptedcandidatesComponent} from "./acceptedcandidates/acceptedcandidat
 import {InsaComponent} from "./insa/insa.component";
 import {WaitingofferComponent} from "./waitingoffer/waitingoffer.component";
 import {OfferdecideComponent} from "./offerdecide/offerdecide.component";
+import {ConventionsComponent} from "./conventions/conventions.component";
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent},
       { path: 'offers', component: OffersComponent},
       { path: 'appliedoffers', component: AppliedoffersComponent},
+      { path: 'convention', component: ConventionsComponent}
     ]
   },
   { path: 'partner', component: PartnerComponent,
@@ -41,13 +43,13 @@ const routes: Routes = [
       { path: 'decidedcandidates', component: AcceptedcandidatesComponent},
     ]
   },
-  /*{ path: 'SFO', component: SFOComponent,
+  { path: 'fsd', component: InsaComponent,
     children: [
       { path: '', component: OffersComponent},
       { path: 'waitingoffers', component: WaitingofferComponent},
-      { path: 'acceptedcandidates', component: AcceptedcandidatesComponent},
+      { path: 'decidedcandidates', component: AcceptedcandidatesComponent},
     ]
-  },*/
+  },
   { path: 'admin', component: AdminComponent,
     children: [
       { path: '', component: AdminComponent},

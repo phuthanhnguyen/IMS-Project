@@ -130,7 +130,8 @@ export class OffersComponent implements OnInit {
     var info = {
       'offerId': this.offerCible.id,
       'auth':this.sharedService.getAutho(),
-      'company': this.offerCible.enterprise
+      'company': this.offerCible.enterprise,
+      'message': this.message
     };
     var json = JSON.stringify(info);
 
@@ -161,8 +162,8 @@ export class OffersComponent implements OnInit {
 
 
   ngOnInit() {
-    /*if (this.sharedService.getUser() == null)
-      location.href = "http://localhost:4200/";*/
+    if (this.sharedService.getUser() == null)
+      location.href = "http://localhost:4200/";
   }
 
 }

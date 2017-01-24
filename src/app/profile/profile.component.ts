@@ -36,6 +36,30 @@ export class ProfileComponent implements OnInit {
     item.upload();
   }
 
+  delete = function(index){
+    console.log("delete "+index);
+    var cvId = this.cvs[index].id;
+
+    var autho = btoa(this.username+':'+this.password);
+    this.sharedService.setAutho(autho);
+    var json = JSON.stringify({
+      "auth": this.sharedService.getAutho(),
+      "cvId": cvId
+    });
+    console.log(json);
+    var headers = new Headers();
+    headers.append('Content-type','application/json');
+    this.http.post('http://localhost:3000/deletecv',json,{headers: headers})
+      .map(res => res.json())
+      .subscribe(
+        data=> {
+          console.log(data);
+        },
+        error=> console.log(error)
+      )
+
+  }
+
   ngOnInit() {
     if (this.sharedService.getUser() != null)
       this.user = this.sharedService.getUser();

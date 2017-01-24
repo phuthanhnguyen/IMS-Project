@@ -20,6 +20,7 @@ import { InsaComponent } from './insa/insa.component';
 import { WaitingofferComponent } from './waitingoffer/waitingoffer.component';
 import { AcceptedcandidatesComponent } from './acceptedcandidates/acceptedcandidates.component';
 import { OfferdecideComponent } from './offerdecide/offerdecide.component';
+import { ConventionsComponent } from './conventions/conventions.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { OfferdecideComponent } from './offerdecide/offerdecide.component';
     WaitingofferComponent,
     AcceptedcandidatesComponent,
     OfferdecideComponent,
-    FileSelectDirective
+    FileSelectDirective,
+    ConventionsComponent
   ],
 
   imports: [

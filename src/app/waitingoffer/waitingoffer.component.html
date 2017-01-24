@@ -1,74 +1,116 @@
+<br>
 <div class="container">
   <div class="row">
-    <div class="col-md-6" >
-      <md-card style="margin-right: 0px;">
-        <md-card-title class="text-center">List of applicaitons</md-card-title>
-        <md-card-content>
-          <md-list-item *ngFor="let appli of waitingAppliList; let index = index;" (click)="setAppliCible(appli); setIndexSelected(index);">
-            <h4 md-line [style.background-color]="isSelected(index)">Application with ID {{appli.id}}</h4>
-          </md-list-item>
-        </md-card-content>
-      </md-card>
-    </div>
-    <div class="col-md-6">
-      <md-card style="margin-left: 0px;">
-        <md-card-title class="text-center" *ngIf="!showDetails">Offer details and student profile</md-card-title>
-        <div *ngIf="showDetails">
-          <md-card-title class="text-center" *ngIf="!showDetails">Offer details and student profile</md-card-title>
-          <md-card-content>
-            <md-list-item>
-              <span style="font-weight: bold;">Enterprise: </span>
-              <span>{{offerCible.enterprise}}</span>
-            </md-list-item>
-            <md-list-item>
-              <span style="font-weight: bold;">Upload Date: </span>
-              <span>{{offerCible.dateCreation}}</span>
-            </md-list-item>
-            <md-list-item>
-              <span style="font-weight: bold;">Beginning Date: </span>
-              <span>{{offerCible.dateBeginning}}</span>
-            </md-list-item>
-            <md-list-item>
-              <span style="font-weight: bold;">Intership Length: </span>
-              <span>{{offerCible.length}} month(s)</span>
-            </md-list-item>
-            <md-list-item>
-              <span style="font-weight: bold;">Activity Field: </span>
-              <span>{{offerCible.activityField}}</span>
-            </md-list-item>
-            <md-list-item>
-              <span style="font-weight: bold;">Location:</span>
-              <span>{{offerCible.areaCode}} {{offerCible.location}}</span>
-            </md-list-item>
-            <md-list-item>
-              <span style="font-weight: bold;">Mission: </span>
-              <span>{{offerCible.missionStatement}}</span>
-            </md-list-item>
-            <md-list-item>
-              <span style="font-weight: bold;">Details: </span>
-              <span>{{offerCible.details}}</span>
-            </md-list-item>
-            <md-list-item>
-              <span style="font-weight: bold;">Profile: </span>
-              <span>{{offerCible.profile}}</span>
-            </md-list-item>
-            <md-list-item>
-              <span style="font-weight: bold;">Pay: </span>
-              <span>{{offerCible.pay}}</span>
-            </md-list-item>
-            <md-list-item>
-              <span style="font-weight: bold;">Contact: </span>
-              <span>{{offerCible.contactInformations}}</span>
-            </md-list-item>
-            <br>
-            <div class="text-center">
-              <button md-raised-button color="primary" (click)="acceptAppli()">Accept</button>
-              <button md-raised-button color="accent" (click)="refuseAppli()">Refuse</button>
+    <div class="col-md-4" >
+      <div class="card card-block">
+        <h4 class="card-title text-xs-center">List of applications</h4>
+        <hr>
+        <div class="card-content">
+          <div class="card-text content">
+            <div class="list-group">
+              <div class="list-group-item list-group-item-action {{isSelectedAppli(indexAppli)}}"
+                   title="Candidates"
+                   *ngFor="let appli of waitingAppliList; let indexAppli = index;" (click)="setAppliCible(appli);">
+                <h5 class="list-group-item-heading">Application with ID {{appli.id}}</h5>
+              </div>
             </div>
-            <br>
-          </md-card-content>
+          </div>
         </div>
-      </md-card>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card card-block" id="offerdetails">
+        <h4 class="card-title text-xs-center">Offer details</h4>
+        <div class="card-content" *ngIf="showDetails">
+          <p>
+            <span style="font-weight: bold;">Enterprise: </span>
+            <span>{{offerCible.enterprise}}</span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Upload Date: </span>
+            <span>{{offerCible.dateCreation}}</span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Beginning Date: </span>
+            <span>{{offerCible.dateBeginning}}</span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Intership Length: </span>
+            <span>{{offerCible.length}} month(s)</span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Activity Field: </span>
+            <span>{{offerCible.activityField}}</span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Location:</span>
+            <span>{{offerCible.areaCode}} {{offerCible.location}}</span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Mission: </span>
+            <br>
+            <br>
+            <span [innerHTML]="offerCible.missionStatement"></span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Details: </span>
+            <span>{{offerCible.details}}</span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Profile: </span>
+            <span>{{offerCible.profile}}</span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Pay: </span>
+            <span>{{offerCible.pay}}</span>
+          </p>
+          <p>
+            <span style="font-weight: bold;">Contact: </span>
+            <span>{{offerCible.contactInformations}}</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="card card-block" id="studentprofile">
+        <h4 class="card-title text-xs-center">Student profile</h4>
+        <div class="card-content" *ngIf="showDetails">
+          <table class="table table-user-information text-xs-center">
+            <tr>
+              <td style="font-weight: bold;">Name:</td>
+              <td>{{studentCible.name}}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">Faculty:</td>
+              <td>{{studentCible.pathway}}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">Year:</td>
+              <td>BAC +{{studentCible.year}}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">Status:</td>
+              <td>{{studentCible.type}}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">Email:</td>
+              <td>{{studentCible.email}}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">Cv:</td>
+              <td>
+                <div *ngFor="let cv of studentCible.cvs">
+                  <span>{{cv.name}}</span>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <br>
+          <div class="text-xs-center">
+            <button class="btn btn-primary" (click)="candidateResponse('accept')">Accept</button>
+            <button class="btn btn-danger" (click)="candidateResponse('refuse')">Refuse</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

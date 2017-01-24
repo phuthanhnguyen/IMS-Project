@@ -29,10 +29,11 @@
           <td>
             <div *ngFor="let cv of cvs; let index=index">
               <a target="_blank" href ="{{download(index)}}">{{cv.name}}</a>
+              <i class="material-icons" (click)="delete(index)">delete</i>
             </div>
             <!--<input type="file" ng2FileSelect [uploader]="uploader"/>
             <button class="btn btn-default" (click)="uploadFile()">Upload</button>-->
-            <form action="http://10.32.3.92:8080/IMS-war/resources/cvs?name=toto" method="POST" enctype="multipart/form-data">
+            <form action="http://10.32.0.249:8080/IMS-war/resources/cvs?name=toto" method="post" enctype="multipart/form-data">
               <p>
                 File: <input type="file" name="file"/>
               </p>

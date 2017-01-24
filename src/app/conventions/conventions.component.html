@@ -1,0 +1,24 @@
+<div class="card card-block">
+  <h3 class="card-title">
+    List of offers
+  </h3>
+  <hr>
+  <table class="table table-striped">
+    <thead class="thead-inverse">
+    <tr>
+      <th>#</th>
+      <th>Title</th>
+      <th>Download</th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let convention of conventionList; let index = index;">
+      <tr>
+        <th scope="row">{{index+1}}</th>
+        <td>convention.title</td>
+        <td>
+          <a href="{{convention.downloadLink}}">Download</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {SharedService} from "../app.service";
-import {User, Partner, Insa, Admin, Student} from '../model/user';
+import {User, Partner, Insa, Admin, Student, FSD} from '../model/user';
 import { Router } from '@angular/router';
 
 import 'rxjs/add/operator/map';
@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
               //go to the interface of user model
               switch (data.group){
                 case "STUDENT":
+                  console.log(data.cvs);
                   //if the username and password correct
                   this.userLogin = new Student(data.id,data.name,data.group,data.username,null,data.year,data.cvs,data.email,data.pathway);
                   //update user and offerlist models
@@ -60,6 +61,13 @@ export class LoginComponent implements OnInit {
                   //update user and offerlist models
                   this.sharedService.setUser(this.userLogin);
                   this.router.navigate(["/insa"]);
+                  break;
+                case "FSD":
+                  //if the username and password correct
+                  this.userLogin = new FSD(data.id,data.name,data.group,data.username,null,data.email);
+                  //update user and offerlist models
+                  this.sharedService.setUser(this.userLogin);
+                  this.router.navigate(["/fsd"]);
                   break;
                 case "admin":
                   //if the username and password correct

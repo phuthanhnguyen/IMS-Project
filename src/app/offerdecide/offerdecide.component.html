@@ -7,8 +7,8 @@
           <div class="list-group">
             <div *ngFor="let student of studentList; let indexStudent = index;"
                  class="list-group-item list-group-item-action {{isSelectedStudent(indexStudent)}}"
-                 (click)="setCandidateCible(student,indexStudent)">
-              <h5 class="list-group-item-heading">{{student.lastName}} {{student.firstName}}</h5>
+                 (click)="setCandidateCible(student, indexStudent)">
+              <h5 class="list-group-item-heading">{{student.name}}</h5>
               <p class="list-group-item-text">BAC +{{student.year}}</p>
             </div>
           </div>
@@ -75,30 +75,29 @@
           <table class="table table-user-information text-xs-center">
             <tr>
               <td style="font-weight: bold;">Name:</td>
-              <td>{{user.name}}</td>
+              <td>{{studentCible.name}}</td>
             </tr>
             <tr>
               <td style="font-weight: bold;">Faculty:</td>
-              <td>{{user.pathway}}</td>
+              <td>{{studentCible.pathway}}</td>
             </tr>
             <tr>
               <td style="font-weight: bold;">Year:</td>
-              <td>BAC +{{user.year}}</td>
+              <td>BAC +{{studentCible.year}}</td>
             </tr>
             <tr>
               <td style="font-weight: bold;">Status:</td>
-              <td>{{user.type}}</td>
+              <td>{{studentCible.type}}</td>
             </tr>
             <tr>
               <td style="font-weight: bold;">Email:</td>
-              <td>{{user.email}}</td>
+              <td>{{studentCible.email}}</td>
             </tr>
             <tr>
               <td style="font-weight: bold;">Cv:</td>
               <td>
-                <div *ngFor="let cv of user.cvs">
-                  <span>{{cs.name}}</span>
-
+                <div *ngFor="let cv of studentCible.cvs">
+                  <span>{{cv.name}}</span>
                 </div>
               </td>
             </tr>
