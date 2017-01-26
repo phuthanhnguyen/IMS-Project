@@ -23,21 +23,12 @@ export class WaitingofferComponent implements OnInit {
   indexSelected:number;
 
   //define url of service
-  urlWaitingAppli:string = 'http://localhost:3000/getapplicationscc';
-  urlGetStudentByID:string = 'http://localhost:3000/getstudentfromapp';
-  urlGetOfferByID:string = 'http://localhost:3000/getOfferFromApp';
+  urlWaitingAppli:string = 'http://'+this.sharedService.getAdr()+':3000/getapplicationscc';
+  urlGetStudentByID:string = 'http://'+this.sharedService.getAdr()+':3000/getstudentfromapp';
+  urlGetOfferByID:string = 'http://'+this.sharedService.getAdr()+':3000/getofferfromapp';
 
   constructor(private http: Http, private sharedService: SharedService) {
     this.getWaitingAppli();
-    //test
-    /*this.waitingAppliList.push(new Appli(1,1,1,1,"Waiting_cc"));
-    this.waitingAppliList.push(new Appli(2,1,1,1,"Waiting_cc"));
-    this.waitingAppliList.push(new Appli(3,1,1,1,"Waiting_cc"));
-    this.waitingAppliList.push(new Appli(4,1,1,1,"Waiting_cc"));
-    this.waitingAppliList.push(new Appli(5,1,1,1,"Waiting_cc"));
-    this.waitingAppliList.push(new Appli(6,1,1,1,"Waiting_cc"));*/
-
-
   }
 
   isSelectedAppli = function(index:number){
@@ -49,8 +40,10 @@ export class WaitingofferComponent implements OnInit {
   //when choose a application in the list
   setAppliCible = function(appli:Appli){
     this.appliCible = appli;
-    this.updateStudentCible(this.urlGetStudentByID, this.appliCible);
-    this.updateOfferCible(this.urlGetOfferByID, this.appliCible);
+    this.updateOfferCible(this.urlGetOfferByID);
+    this.updateStudentCible(this.urlGetStudentByID);
+
+
   }
 
 
@@ -68,10 +61,10 @@ export class WaitingofferComponent implements OnInit {
           for (var i=0; i<apps.length; i++){
             if (this.sharedService.getUser().type=="CLASS_COORDINATOR"){
               if (apps[i].state=="WAITING_CC" && apps[i].idCoordinator==this.sharedService.getUser().id)
-                this.waitingAppliList.push(new Appli(apps[i].id,apps[i].idOffer,apps[i].idStudent,apps[i].idPartner,apps[i].state));
+                this.waitingAppliList.push(apps[i]);
             } else if (this.sharedService.getUser().type=="FSD"){
               if (apps[i].state=="WAITING_FSD")
-                this.waitingAppliList.push(new Appli(apps[i].id,apps[i].idOffer,apps[i].idStudent,apps[i].idPartner,apps[i].state));
+                this.waitingAppliList.push(apps[i]);
             }
 
           }
@@ -83,10 +76,10 @@ export class WaitingofferComponent implements OnInit {
 
   //for each appli get the student profile and the details of offer
   //get student cible (appli object => studentId => student object)
-  updateStudentCible = function(urlGetStudentByID:string,appliCible: Appli) {
+  updateStudentCible = function(urlGetStudentByID:string) {
     var json = JSON.stringify({
       'auth': this.sharedService.getAutho(),
-      'studentId': this.appliCible.studentId
+      'studentId': this.appliCible.idStudent
     });
     var headers = new Headers();
     headers.append('Content-type', 'application/json');
@@ -95,19 +88,21 @@ export class WaitingofferComponent implements OnInit {
       .map(res=>res.json())
       .subscribe(
         data=> {
-          console.log(data);
+          console.log('student: '+data);
           this.studentCible = new Student(data.id,data.name,data.group,data.username,null,data.year,data.cvs,data.email,data.pathway);
+          console.log(this.studentCible);
+
         },
         error=>console.log(error)
       );
   }
 
   //get offer cible (appli object => offerId => offer object)
-  updateOfferCible = function(urlGetOfferByID:string,appliCible: Appli) {
+  updateOfferCible = function(urlGetOfferByID:string) {
     var json = JSON.stringify({
       'auth': this.sharedService.getAutho(),
-      'offerId': this.appliCible.offerId,
-      'partnerId': this.appliCible.partnerId
+      'offerId': this.appliCible.idOffer,
+      'partnerName': this.appliCible.namePartner
     });
     var headers = new Headers();
     headers.append('Content-type', 'application/json');
@@ -116,10 +111,13 @@ export class WaitingofferComponent implements OnInit {
       .map(res=>res.json())
       .subscribe(
         data=>{
+          console.log('offer: ');
           console.log(data);
           this.offerCible = new Offer(data.ido,data.enterprise,data.dateCreation,data.dateBeginning,data.length,
             data.activityField, data.title, data.areaCode,data.location,data.missionStatement,
             data.pay,data.details,data.profile,data.contactInformations);
+          console.log(this.offerCible);
+          this.showDetails = true;
         },
         error=>console.log(error)
       );
@@ -140,11 +138,12 @@ export class WaitingofferComponent implements OnInit {
     console.log(json);
     var headers = new Headers();
     headers.append('Content-type', 'application/json');
-    this.http.post('http://localhost:3000/setdecision', json, {headers: headers})
+    this.http.post('http://'+this.sharedService.getAdr()+':3000/setdecision', json, {headers: headers})
       .map(res=>res.json())
       .subscribe(
         data=> {
           console.log(data);
+          alert("You "+decision+"ed the candidate!!!");
         },
         error=>console.log(error)
       )

@@ -1,24 +1,36 @@
-<div class="card card-block">
-  <h3 class="card-title">
-    List of offers
-  </h3>
-  <hr>
-  <table class="table table-striped">
-    <thead class="thead-inverse">
-    <tr>
-      <th>#</th>
-      <th>Title</th>
-      <th>Download</th>
-    </tr>
-    </thead>
-    <tbody *ngFor="let convention of conventionList; let index = index;">
+<div class="container">
+  <div class="card card-block">
+    <h3 class="card-title">
+      List of agreements
+    </h3>
+    <hr>
+    <table class="table table-striped">
+      <thead class="thead-inverse">
+      <tr>
+        <th>#</th>
+        <th>Title</th>
+        <th>Parner Name</th>
+        <th>State</th>
+        <th>Download</th>
+        <th>Decision</th>
+      </tr>
+      </thead>
+      <tbody *ngFor="let convention of conventionList; let index = index;">
       <tr>
         <th scope="row">{{index+1}}</th>
-        <td>convention.title</td>
+        <td>{{convention.title}}</td>
+        <td>{{convention.namePartner}}</td>
+        <td>{{convention.state}}</td>
         <td>
-          <a href="{{convention.downloadLink}}">Download</a>
+          <a href="{{downloadLink(index)}}" target="_blank">Download</a>
+        </td>
+        <td>
+          <button class="btn btn-primary" (click)="conventionResponse('accept',convention)">Accept</button>
+          <button class="btn btn-danger" (click)="conventionResponse('refuse',convention)">Refuse</button>
         </td>
       </tr>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 </div>
+

@@ -21,7 +21,7 @@ export class PartneroffersComponent implements OnInit {
   indexOfferCible:number = null;
 
   //for http request
-  urlOMS: string = 'http://localhost:3000/partneroffers';
+  urlOMS: string = 'http://'+this.sharedService.getAdr()+':3000/partneroffers';
 
   offerTest:Offer;
   constructor(private http: Http, private sharedService: SharedService, private router: Router) {

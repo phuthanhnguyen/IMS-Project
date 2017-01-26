@@ -14,6 +14,7 @@ import {InsaComponent} from "./insa/insa.component";
 import {WaitingofferComponent} from "./waitingoffer/waitingoffer.component";
 import {OfferdecideComponent} from "./offerdecide/offerdecide.component";
 import {ConventionsComponent} from "./conventions/conventions.component";
+import {CvsComponent} from "./cvs/cvs.component";
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -23,7 +24,8 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent},
       { path: 'offers', component: OffersComponent},
       { path: 'appliedoffers', component: AppliedoffersComponent},
-      { path: 'convention', component: ConventionsComponent}
+      { path: 'convention', component: ConventionsComponent},
+      { path: 'cvs', component: CvsComponent}
     ]
   },
   { path: 'partner', component: PartnerComponent,
@@ -32,6 +34,7 @@ const routes: Routes = [
       { path: 'myoffers', component: PartneroffersComponent},
       { path: 'myoffers/:offer', component: OfferdecideComponent},
       { path: 'acceptedcandidates', component: AcceptedcandidatesComponent},
+      { path: 'convention', component: ConventionsComponent}
     ]
   },
   { path: 'insa', component: InsaComponent,
@@ -41,6 +44,7 @@ const routes: Routes = [
       { path: 'waitingoffers', component: WaitingofferComponent},
       /*{ path: 'maskedoffers', component: MaskedoffersComponent},*/
       { path: 'decidedcandidates', component: AcceptedcandidatesComponent},
+      { path: 'convention', component: ConventionsComponent}
     ]
   },
   { path: 'fsd', component: InsaComponent,

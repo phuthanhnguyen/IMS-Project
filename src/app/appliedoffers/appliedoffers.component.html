@@ -70,46 +70,34 @@
         <div class="card-title text-xs-center" *ngIf="showContent">
           <h3>Statement of your internship process at {{offerCible.enterprise}}</h3>
         </div>
-
+        <hr>
         <div class="card-text">
-          <md-tab-group *ngIf="showContent">
-            <md-tab *ngIf="0<=appliStatement">
-              <template md-tab-label>
-                Step 1
-              </template>
-              <br>
+          <div *ngIf="showContent">
+            <div *ngIf="0==appliStatement">
               <h1>Your internship application was sent to the partner!</h1>
-              <br>
-              <p>Waiting for the partner response to continue to the step 2</p>
-            </md-tab>
-            <md-tab *ngIf="1<=appliStatement">
-              <template md-tab-label>
-                Step 2
-              </template>
-              <br>
+            </div>
+            <div *ngIf="1==appliStatement">
               <h1>Your internship application was accepted by the partner!</h1>
-              <br>
-              <p>Waiting for the class coordinator response to continue to the step 3</p>
-            </md-tab>
-            <md-tab *ngIf="2<=appliStatement">
-              <template md-tab-label>
-                Step 3
-              </template>
-              <br>
+            </div>
+            <div *ngIf="2==appliStatement">
               <h1>Your internship application was accepted by the class coordinator!</h1>
-              <br>
-              <p>Waiting for the SFO response to continue to the step 4</p>
-            </md-tab>
-            <md-tab *ngIf="3<=appliStatement">
-              <template md-tab-label>
-                Step 4
-              </template>
-              <br>
+            </div>
+            <div *ngIf="3==appliStatement">
+              <h1>Your internship application was refused by the class coordinator!</h1>
+            </div>
+            <div *ngIf="4==appliStatement">
+              <h1>Finally, your application was refused by partner!!</h1>
+            </div>
+            <div *ngIf="5==appliStatement">
+              <h1>Finally, your application was refused by FDO!!</h1>
+            </div>
+            <div *ngIf="6==appliStatement">
+              <h1>Your application was cancelled!!</h1>
+            </div>
+            <div *ngIf="7==appliStatement">
               <h1>Finally, your application is completely accepted!!</h1>
-              <br>
-              <p>Now you can go to the internship convention step</p>
-            </md-tab>
-          </md-tab-group>
+            </div>
+          </div>
         </div>
       </div>
     </div>

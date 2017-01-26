@@ -15,7 +15,7 @@ export class ProfileComponent implements OnInit {
   dlLinkCV : any[] = [];
 
   //for file upload
-  URL:string = 'http://localhost:3000/uploadfile';
+  URL:string = 'http://'+this.sharedService.getAdr()+':3000/uploadfile';
   public uploader:FileUploader = new FileUploader({url: this.URL});
 
   constructor(private  sharedService: SharedService, private http:Http) {
@@ -49,7 +49,7 @@ export class ProfileComponent implements OnInit {
     console.log(json);
     var headers = new Headers();
     headers.append('Content-type','application/json');
-    this.http.post('http://localhost:3000/deletecv',json,{headers: headers})
+    this.http.post('http://'+this.sharedService.getAdr()+':3000/deletecv',json,{headers: headers})
       .map(res => res.json())
       .subscribe(
         data=> {
@@ -63,7 +63,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     if (this.sharedService.getUser() != null)
       this.user = this.sharedService.getUser();
-    else location.href = "http://localhost:4200/";
+    else location.href = 'http://'+this.sharedService.getAdr()+':4200/';
   }
 
 }

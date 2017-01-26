@@ -1,13 +1,9 @@
 <div class="container">
   <div class="card card-block center" style="width: 50%;">
-    <h3 class="card-title text-xs-center">{{user.firstName}} {{user.lastName}}</h3>
+    <h3 class="card-title text-xs-center">{{user.name}}</h3>
     <br>
     <div class="card-text">
       <table class="table table-user-information text-xs-center">
-        <tr>
-          <td style="font-weight: bold;">Name:</td>
-          <td>{{user.name}}</td>
-        </tr>
         <tr>
           <td style="font-weight: bold;">Faculty:</td>
           <td>{{user.pathway}}</td>
@@ -23,23 +19,6 @@
         <tr>
           <td style="font-weight: bold;">Email:</td>
           <td>{{user.email}}</td>
-        </tr>
-        <tr>
-          <td style="font-weight: bold;">CVs:</td>
-          <td>
-            <div *ngFor="let cv of cvs; let index=index">
-              <a target="_blank" href ="{{download(index)}}">{{cv.name}}</a>
-              <i class="material-icons" (click)="delete(index)">delete</i>
-            </div>
-            <!--<input type="file" ng2FileSelect [uploader]="uploader"/>
-            <button class="btn btn-default" (click)="uploadFile()">Upload</button>-->
-            <form action="http://10.32.0.249:8080/IMS-war/resources/cvs?name=toto" method="post" enctype="multipart/form-data">
-              <p>
-                File: <input type="file" name="file"/>
-              </p>
-              <input type="submit" value="Add User"/>
-            </form>
-          </td>
         </tr>
       </table>
     </div>

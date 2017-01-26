@@ -84,8 +84,10 @@
             <span style="font-weight: bold;">Contact: </span>
             <span [innerHTML]="offerCible.contactInformations"></span>
           </p>
-          <br>
-          <button class="btn btn-primary float-xs-right float-xs-right" data-toggle="modal" data-target="#applyModal">Apply</button>
+          <div *ngIf="ifStudent==1">
+            <br>
+            <button class="btn btn-primary float-xs-right float-xs-right" data-toggle="modal" data-target="#applyModal">Apply</button>
+          </div>
         </div>
       </div>
     </div>
@@ -165,7 +167,6 @@
               <br>
             </div>
           </div>
-
           <br>
           <div class="form-group">
             <button class="btn btn-primary float-xs-right" (click)="apply()" data-dismiss="modal">Apply</button>

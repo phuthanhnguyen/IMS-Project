@@ -23,7 +23,9 @@ export class OffersComponent implements OnInit {
   keywords: string = null;
   order:string = null;
   cvs:any[] = [];
+
   choosedCV:string = null;
+  ifStudent:number=0;
 
   //apply form
   message:string=null;
@@ -38,24 +40,20 @@ export class OffersComponent implements OnInit {
   indexSelected:number;
 
   //define urls to make http requests
-  urlFilterdOffers:string = "http://localhost:3000/filter";
-  urlCreateAppli: string = "http://localhost:3000/apply";
-  urlGetOffers: string = "http://localhost:3000/getoffers";
-
-  offerTest:Offer;
+  urlFilterdOffers:string = 'http://'+this.sharedService.getAdr()+':3000/filter';
+  urlCreateAppli: string = 'http://'+this.sharedService.getAdr()+':3000/apply';
+  urlGetOffers: string = 'http://'+this.sharedService.getAdr()+':3000/getoffers';
+  cvUrl:string = 'http://'+this.sharedService.getAdr()+':3000/getCvs';
 
   constructor(private http: Http, private sharedService: SharedService) {
     this.getAllOffers(this.urlGetOffers);
     this.user = this.sharedService.getUser();
-    this.cvs = this.user.cvs;
-    // for the test
-    /*this.offerTest = new Offer(1,"Cap Gemini", "12/3/2016", "1/2/2017", 6, "Computer Science", "Web development", 31400, "Toulouse - France",
-      "<p>Dans ce cadre, vous êtes en charge :</p> <p> -   De l’analyse, l’étude, la réalisation des JCL <p>- Du maintien en condition opérationnelle des applications</p> <p>- De l’application des actions de gestion de changement pour la production</p> <p>- De la rédaction des procédures d’exploitation des applications</p> <p>- Du reporting et du planning des mises en production</p> <p>- Du support technique</p>", 1000, "Some details", "Javascript,html,css,PHP", "tests@test.com");
-    this.offers.push(this.offerTest);
-    this.offerTest = new Offer(2,"CGI", "12/3/2016", "1/2/2017", 6, "Computer Science", "Web development", 31400, "Toulouse - France", "Do something interesting", 1000, "Some details", "Javascript,html,css,PHP", "tests@test.com");
-    this.offers.push(this.offerTest);
-    this.offerTest = (new Offer(3,"Sopra", "12/3/2016", "1/2/2017", 6, "Computer Science", "Web development", 31400, "Toulouse - France", "Do something interesting", 1000, "Some details", "Javascript,html,css,PHP", "tests@test.com"));
-    this.offers.push(this.offerTest);*/
+    console.log(this.user.type)
+    if (this.user.type == 'STUDENT'){
+      this.ifStudent = 1;
+      this.getCvList();
+    }
+
   }
 
   filter(){
@@ -80,7 +78,13 @@ export class OffersComponent implements OnInit {
           var jsonVide = {};
           if (data != jsonVide){
             console.log(data);
-            this.offers = data;
+            this.offers = [];
+            for (var offer of data){
+              this.offerItem = new Offer(offer.ido,offer.enterprise,offer.dateCreation,offer.dateBeginning,offer.length,
+                offer.activityField, offer.title, offer.areaCode,offer.location,offer.missionStatement,
+                offer.pay,offer.details,offer.profile,offer.contactInformations);
+              this.offers.push(this.offerItem);
+            }
           }
         },
         error=> console.log('error')
@@ -97,6 +101,7 @@ export class OffersComponent implements OnInit {
       .subscribe(
         data=>{
           var offersList = (data);
+          this.offers = [];
           for (var offer of offersList){
             this.offerItem = new Offer(offer.ido,offer.enterprise,offer.dateCreation,offer.dateBeginning,offer.length,
               offer.activityField, offer.title, offer.areaCode,offer.location,offer.missionStatement,
@@ -127,21 +132,26 @@ export class OffersComponent implements OnInit {
   apply = function(offer: Offer){
     //create a application object
     console.log(this.choosedCV);
-    var info = {
-      'offerId': this.offerCible.id,
-      'auth':this.sharedService.getAutho(),
-      'company': this.offerCible.enterprise,
-      'message': this.message
-    };
-    var json = JSON.stringify(info);
+    if (this.choosedCV != null) {
+      var info = {
+        'offerId': this.offerCible.id,
+        'auth': this.sharedService.getAutho(),
+        'company': this.offerCible.enterprise,
+        'message': this.message,
+        'cvId': this.choosedCV
+      };
+      var json = JSON.stringify(info);
 
-    //upload it to DB
-    this.insertAppliToDb(this.urlCreateAppli, json);
+      //upload it to DB
+      this.insertAppliToDb(this.urlCreateAppli, json);
 
-    //todo: try to make a dialog to confirm an application
+      //todo: try to make a dialog to confirm an application
 
-    //test
-    console.log('applied to offer number '+this.offerCible.id);
+      //test
+      console.log('applied to offer number ' + this.offerCible.id);
+      alert("The candidate is sent to the partner!!!");
+      this.getAllOffers(this.urlGetOffers);
+    } else alert("Choose a CV when applying to an offer!");
   }
 
   //create appli on DB
@@ -160,10 +170,28 @@ export class OffersComponent implements OnInit {
 
   //todo: for insa, insert a button of masking offer that do hidding offer action
 
+  getCvList = function(){
+    //change statement of application: send [studentId and offer Id]
+    var requestContent = {
+      'auth': this.sharedService.getAutho()
+    }
 
+    var json = JSON.stringify(requestContent);
+    var headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    this.http.post(this.cvUrl, json, {headers: headers})
+      .map(res=>res.json())
+      .subscribe(
+        data=> {
+          console.log(data);
+          this.cvs = data;
+        },
+        error=>console.log(error)
+      )
+  };
   ngOnInit() {
     if (this.sharedService.getUser() == null)
-      location.href = "http://localhost:4200/";
+      location.href = 'http://'+this.sharedService.getAdr()+':4200/';
   }
 
 }

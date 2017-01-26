@@ -7,6 +7,8 @@ export class SharedService {
   private user: User = null;
   private autho: string = null;
   private offerCible: Offer =null;
+  //private adr:string='10.32.3.71';
+  private adr:string='10.32.1.165';
   constructor() {}
 
   setUser(user: User){
@@ -31,5 +33,9 @@ export class SharedService {
 
   getOfferCible(){
     return this.offerCible;
+  }
+
+  getAdr(){
+    return this.adr;
   }
 }

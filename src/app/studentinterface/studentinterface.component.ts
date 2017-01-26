@@ -29,12 +29,12 @@ export class StudentinterfaceComponent implements OnInit {
   logout = function(){
     this.sharedService.setAutho(null);
     this.sharedService.setUser(null);
-    location.href = "http://localhost:4200/";
+    location.href = 'http://'+this.sharedService.getAdr()+':4200/';
   }
 
   ngOnInit() {
     if (this.sharedService.getUser() != null)
       this.user = this.sharedService.getUser();
-    else location.href = "http://localhost:4200/";
+    else location.href = 'http://'+this.sharedService.getAdr()+':4200/';
   }
 }

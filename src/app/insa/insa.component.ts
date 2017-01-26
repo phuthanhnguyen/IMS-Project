@@ -24,7 +24,7 @@ export class InsaComponent implements OnInit {
   logout = function(){
     this.sharedService.setAutho(null);
     this.sharedService.setUser(null);
-    location.href = "http://localhost:4200/";
+    location.href = 'http://'+this.sharedService.getAdr()+':4200/';
   }
 
   ngOnInit() {

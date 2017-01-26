@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       var json = JSON.stringify({"auth": this.sharedService.getAutho()});
       var headers = new Headers();
       headers.append('Content-type','application/json');
-      this.http.post('http://localhost:3000/login',json,{headers: headers})
+      this.http.post('http://'+this.sharedService.getAdr()+':3000/login',json,{headers: headers})
         .map(res => res.json())
         .subscribe(
           data=> {

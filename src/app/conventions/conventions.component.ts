@@ -9,8 +9,10 @@ import {SharedService} from "../app.service";
 export class ConventionsComponent implements OnInit {
   conventionList: any[] = [];
   conventionUrl:string = 'http://localhost:3000/getconventions';
-
-  constructor(private http: Http, private serviceShared: SharedService) {
+  urlAMSDecide:string = 'http://localhost:3000/setConventionsDecision';
+  constructor(private http: Http, private sharedService: SharedService) {
+    this.conventionUrl = 'http://'+this.sharedService.getAdr()+':3000/getconventions';
+    this.urlAMSDecide = 'http://'+this.sharedService.getAdr()+':3000/setConventionsDecision';
     this.getConventions();
   }
 
@@ -20,7 +22,7 @@ export class ConventionsComponent implements OnInit {
     headers.append('Content-type', 'application/json');
 
     var json = JSON.stringify({
-      'auth': this.serviceShared.getAutho()
+      'auth': this.sharedService.getAutho()
     });
 
     this.http.post(this.conventionUrl, json,{headers: headers})
@@ -36,9 +38,39 @@ export class ConventionsComponent implements OnInit {
       );
   }
 
+  downloadLink= function(index){
+    return 'http://10.32.1.191:8080/IMS-war/resources/agreements/'+this.conventionList[index].id;
+  }
+
+  conventionResponse = function(decision,convention){
+    //get application
+    var conventionId = convention.id;
+    console.log(conventionId);
+
+    //change statement of application: send [studentId and offer Id]
+    var requestContent = {
+      'auth': this.sharedService.getAutho(),
+      'conventionId': conventionId,
+      'decision': decision
+    }
+
+    var json = JSON.stringify(requestContent);
+    var headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    this.http.post(this.urlAMSDecide, json, {headers: headers})
+      .map(res=>res.json())
+      .subscribe(
+        data=> {
+          console.log(data);
+          this.getConventions();
+        },
+        error=>console.log(error)
+      )
+  }
+
   ngOnInit() {
     if (this.sharedService.getUser() == null)
-      location.href = "http://localhost:4200/";
+      location.href = "http://"+this.sharedService.getAdr()+":4200/";
   }
 
 }

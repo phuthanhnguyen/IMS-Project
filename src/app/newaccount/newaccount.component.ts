@@ -62,7 +62,7 @@ export class NewaccountComponent implements OnInit {
       var params = json;
       var headers = new Headers();
       headers.append('Content-type','application/json');
-      return this.http.post('http://localhost:3000/createuser', params,{headers: headers})
+      return this.http.post('http://'+this.sharedService.getAdr+':3000/createuser', params,{headers: headers})
         .map(res => res.json())
         .subscribe(
           data=>{
@@ -79,7 +79,7 @@ export class NewaccountComponent implements OnInit {
     var headers = new Headers();
     headers.append('Content-type','application/json');
 
-    return this.http.get('http://localhost:3000/getuserlist', {headers: headers})
+    return this.http.get('http://'+this.sharedService.getAdr+':3000/getuserlist', {headers: headers})
       .map(res => res.json())
       .subscribe(
         data => {
@@ -114,7 +114,7 @@ export class NewaccountComponent implements OnInit {
 
   ngOnInit() {
     if (this.sharedService.getUser() == null)
-      location.href = "http://localhost:4200/";
+      location.href = "http://"+this.sharedService.getAdr+":4200/";
   }
 
 }

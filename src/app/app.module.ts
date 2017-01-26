@@ -21,6 +21,7 @@ import { WaitingofferComponent } from './waitingoffer/waitingoffer.component';
 import { AcceptedcandidatesComponent } from './acceptedcandidates/acceptedcandidates.component';
 import { OfferdecideComponent } from './offerdecide/offerdecide.component';
 import { ConventionsComponent } from './conventions/conventions.component';
+import { CvsComponent } from './cvs/cvs.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { ConventionsComponent } from './conventions/conventions.component';
     AcceptedcandidatesComponent,
     OfferdecideComponent,
     FileSelectDirective,
-    ConventionsComponent
+    ConventionsComponent,
+    CvsComponent
   ],
 
   imports: [

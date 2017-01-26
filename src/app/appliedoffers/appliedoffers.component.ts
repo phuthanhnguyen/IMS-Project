@@ -18,14 +18,16 @@ export class AppliedoffersComponent implements OnInit {
   //display purpose
   appliStatement:number=null;
   showContent: boolean = false;
+
   //model list to show on template
   appliedOfferList: Offer[] = [];
   applicationList: Appli[] = [];
+
   //define the url of the service
-  urlOfferService:string='http://localhost:3000/appliedoffers';
-  urlAppliService:string ='http://localhost:3000/appliedoffers';
+  urlAppliService:string =null;
 
   constructor(private http: Http, private sharedService: SharedService) {
+    this.urlAppliService = 'http://'+this.sharedService.getAdr()+':3000/appliedoffers';
     this.user = this.sharedService.getUser();
     console.log(this.user);
 
@@ -33,12 +35,22 @@ export class AppliedoffersComponent implements OnInit {
   }
 
   setStatement(statement:string){
+    if (statement=="WAITING_PARTNER")
+      this.appliStatement=0;
     if (statement=="WAITING_CC")
         this.appliStatement=1;
-    if (statement=="WAITING_PARTNER")
-        this.appliStatement=0;
     if (statement=="WAITING_FSD")
         this.appliStatement=2;
+    if (statement=="REFUSED_CC")
+      this.appliStatement=3;
+    if (statement=="REFUSED_PARTNER")
+      this.appliStatement=4;
+    if (statement=="REFUSED_FSD")
+      this.appliStatement=5;
+    if (statement=="CANCELLED_STUDENT")
+      this.appliStatement=6;
+    if (statement=="ACCEPTED")
+      this.appliStatement=7;
     console.log(this.appliStatement);
   }
 
@@ -63,6 +75,7 @@ export class AppliedoffersComponent implements OnInit {
       .map(res => res.json())
       .subscribe(
         data => {
+          console.log(data);
           var apps = JSON.parse(data.applications);
           for (var i=0; i<apps.length; i++){
             this.applicationList.push(new Appli(apps[i].id,apps[i].idOffer,apps[i].idStudent,apps[i].idPartner,apps[i].state))
@@ -96,7 +109,7 @@ export class AppliedoffersComponent implements OnInit {
   ngOnInit() {
     if (this.sharedService.getUser() != null)
       this.user = this.sharedService.getUser();
-    else location.href = "http://localhost:4200/";
+    else location.href = "http://"+this.sharedService.getAdr()+":4200/";
   }
 
 }

@@ -56,7 +56,7 @@
           </p>
           <p>
             <span style="font-weight: bold;">Profile: </span>
-            <span>{{offerCible.profile}}</span>
+            <span [innerHTML]="offerCible.profile"></span>
           </p>
           <p>
             <span style="font-weight: bold;">Pay: </span>
@@ -64,7 +64,7 @@
           </p>
           <p>
             <span style="font-weight: bold;">Contact: </span>
-            <span>{{offerCible.contactInformations}}</span>
+            <span [innerHTML]="offerCible.contactInformations"></span>
           </p>
         </div>
       </div>
@@ -96,9 +96,7 @@
             <tr>
               <td style="font-weight: bold;">Cv:</td>
               <td>
-                <div *ngFor="let cv of studentCible.cvs">
-                  <span>{{cv.name}}</span>
-                </div>
+                <a target="_blank" href="{{downloadCV}}">Download</a>
               </td>
             </tr>
           </table>

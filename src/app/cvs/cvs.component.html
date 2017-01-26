@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="card card-block">
+    <h3 class="card-title">
+      List of CVs
+    </h3>
+    <hr>
+    <table class="table table-striped">
+      <thead class="thead-inverse">
+      <tr>
+        <th>#</th>
+        <th>Title</th>
+        <th>Delete</th>
+        <th>Rename</th>
+        <th>Download</th>
+      </tr>
+      </thead>
+      <tbody *ngFor="let cv of cvList; let index = index;">
+      <tr>
+        <th scope="row">{{index+1}}</th>
+        <td>{{cv.name}}</td>
+        <td>
+          <a (click)="delete(index)">Delete</a>
+        </td>
+        <td>
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="CV Name" [(ngModel)]="cvName[index]" [ngModelOptions]="{standalone: true}" >
+            <span class="input-group-btn">
+              <button class="btn btn-secondary" type="button" (click)="rename(index)">Go!</button>
+            </span>
+          </div>
+        </td>
+        <td>
+          <a href="{{downloadLink[index]}}" target="_target">Download</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

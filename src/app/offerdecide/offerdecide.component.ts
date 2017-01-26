@@ -15,7 +15,7 @@ export class OfferdecideComponent implements OnInit {
   candidates: Appli[] = [];
   studentList: Student[] = [];
   applicationList: Appli[] = [];
-
+  downloadCV:string=null;
   offerCible: Offer;
   //chosen object
   studentCible: Student = null;
@@ -25,12 +25,12 @@ export class OfferdecideComponent implements OnInit {
 
   //variable for display things
   showDetails:boolean = false;
-  indexStudentCible:number = 0;
+  indexStudentCible:number = null;
   showProfile:boolean = false;
 
   //for http request
-  urlAMS: string = "http://localhost:3000/getcandidates";
-  urlAMSDecide: string = "http://localhost:3000/setdecision";
+  urlAMS: string = 'http://'+this.sharedService.getAdr()+':3000/getcandidates';
+  urlAMSDecide: string = 'http://'+this.sharedService.getAdr()+':3000/setdecision';
 
   constructor(private http: Http, private sharedService: SharedService) {
     this.partner = this.sharedService.getUser();
@@ -47,7 +47,7 @@ export class OfferdecideComponent implements OnInit {
     console.log(json);
     var headers = new Headers();
     headers.append('Content-type', 'application/json');
-    this.http.post("http://localhost:3000/getapplications", json, {headers: headers})
+    this.http.post('http://'+this.sharedService.getAdr()+':3000/getapplications', json, {headers: headers})
       .map(res => res.json())
       .subscribe(
         data => {
@@ -88,8 +88,8 @@ export class OfferdecideComponent implements OnInit {
   //getApplications
   setCandidateCible(student:Student, index:number) {
     this.studentCible = student;
-    console.log(student);
     this.indexStudentCible = index;
+    this.getCv();
     this.showProfile = true;
   }
 
@@ -118,6 +118,7 @@ export class OfferdecideComponent implements OnInit {
       .subscribe(
         data=> {
           console.log(data);
+          alert("You "+decision+"ed the candidate!!!");
         },
         error=>console.log(error)
       )
@@ -134,11 +135,33 @@ export class OfferdecideComponent implements OnInit {
     }
   }
 
+  getCv = function(){
+    var url = 'http://'+this.sharedService.getAdr()+':3000/getAppFromStudentID';
+    var json = {
+      'auth':this.sharedService.getAutho(),
+      'studentId':this.studentCible.id,
+      'offerId':this.sharedService.getOfferCible().id
+    };
+
+    this.downloadCV = 'http://10.32.1.191:8080/IMS-war/resources/applications?idStudent='+json.studentId+'&idOffer='+json.offerId;
+    /*var sendJson = JSON.stringify(json);
+    var headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    this.http.post(url, sendJson, {headers: headers})
+      .map(res=>res.json())
+      .subscribe(
+        data=> {
+          console.log(data);
+          this.downloadCV = data;
+        },
+        error=>console.log(error)
+      )*/
+  }
+
+
   ngOnInit() {
-    //if (this.sharedService.getUser() != null)
-    this.partner = this.sharedService.getUser();
-    this.offerCible = this.sharedService.getOfferCible();
-    //else location.href = "http://localhost:4200/";
+    //if (this.sharedService.getUser() == null)
+    // location.href = "http://localhost:4200/";
   }
 
 }
